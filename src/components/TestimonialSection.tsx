@@ -49,7 +49,7 @@ const TestimonialSection = () => {
     
     const timer = setTimeout(() => {
       setCurrentIndex((prevIndex) => (prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1));
-    }, 50000);
+    }, 10000);
     
     return () => clearTimeout(timer);
   }, [currentIndex, testimonials.length]);
