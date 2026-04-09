@@ -137,7 +137,6 @@ ul {
   position: relative;
   height: 80vh;
   min-height: 500px;
-  background-image: url('/hero-background.png');
   background-size: cover;
   background-position: center;
   display: flex;
