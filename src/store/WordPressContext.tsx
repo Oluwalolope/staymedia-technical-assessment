@@ -18,9 +18,9 @@ export function WPProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const fetchAllData = async () => {
       try {
-        const pageResponse = await fetch('https://subsidized-tapir-620a7d.instawp.site/wp-json/wp/v2/pages?slug=home&acf_format=standard');
+        const pageResponse = await fetch('https://miraculous-kookaburra-0b58cc.instawp.site/wp-json/wp/v2/pages?slug=home&acf_format=standard');
         
-        const postsResponse = await fetch('https://subsidized-tapir-620a7d.instawp.site/wp-json/wp/v2/posts?_embed');
+        const postsResponse = await fetch('https://miraculous-kookaburra-0b58cc.instawp.site/wp-json/wp/v2/posts?_embed');
 
         if (!pageResponse.ok || !postsResponse.ok) throw new Error('Failed to fetch data from WordPress');
 
