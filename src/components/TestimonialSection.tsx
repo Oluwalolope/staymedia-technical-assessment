@@ -1,5 +1,6 @@
 import { useState, useEffect, type TouchEvent } from 'react';
 import { useWordPress } from '../store/WordPressContext';
+import TESTIMONIALS from '../lib/testimonials';
 
 const TestimonialSection = () => {
   const { wpData, loading, error } = useWordPress();
@@ -86,9 +87,69 @@ const TestimonialSection = () => {
   };
 
   if (loading) return <section className="testimonials"><div>Loading reviews...</div></section>;
-  if (error || testimonials.length === 0) return null;
 
-  const currentTestimonial = testimonials[currentIndex];
+  const currentTestimonial = TESTIMONIALS[currentIndex];
+
+  if (error) return (
+    <section className="testimonials" id="testimonials">
+        <h2 className="title">3,009 happy customers and counting...</h2>
+        <p className="subtitle">Top best reviews of Cocktail by tutu</p>
+        
+        <div 
+          className="testimonial-carousel"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
+          <button className="nav-btn" onClick={prevTestimonial} aria-label="Previous Testimonial">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="arrow-icon">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
+            </svg>
+          </button>
+          
+          <div className="testimonial-content">
+            <div key={currentTestimonial.id} className="animate-fade-in">
+              <div className="avatar">
+                <img src={currentTestimonial.avatar} alt="Customer avatar" />
+              </div>
+              <h3 className="testimonial-title">{currentTestimonial.title}</h3>
+              <p className="testimonial-text">
+                {currentTestimonial.text}
+              </p>
+              <div className="customer-info">
+                <p className="customer-name">{currentTestimonial.name}</p>
+                <div className="stars">
+                  {Array.from({ length: currentTestimonial.stars }).map((_, i) => (
+                    <span key={i}>&#9733; </span>
+                  ))}
+                </div>
+                <p className="customer-role">{currentTestimonial.role}</p>
+              </div>
+            </div>
+          </div>
+
+          <button className="nav-btn" onClick={nextTestimonial} aria-label="Next Testimonial">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="arrow-icon">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+            </svg>
+          </button>
+        </div>
+        <div className="carousel-dots">
+            {TESTIMONIALS.map((_, index) => (
+              <span 
+                key={index} 
+                className={`dot ${index === currentIndex ? 'active' : ''}`}
+                onClick={() => setCurrentIndex(index)}
+                role="button"
+                tabIndex={0}
+                aria-label={`Go to slide ${index + 1}`}
+              ></span>
+            ))}
+        </div>
+      </section>
+  );
+
+  const currentTestimonialFromWP = testimonials[currentIndex];
 
   return (
     <section className="testimonials" id="testimonials">
@@ -108,22 +169,22 @@ const TestimonialSection = () => {
         </button>
         
         <div className="testimonial-content">
-          <div key={currentTestimonial.id} className="animate-fade-in">
+          <div key={currentTestimonialFromWP.id} className="animate-fade-in">
             <div className="avatar">
-              <img src={currentTestimonial.avatar} alt={currentTestimonial.name} />
+              <img src={currentTestimonialFromWP.avatar} alt={currentTestimonialFromWP.name} />
             </div>
-            <h3 className="testimonial-title">{currentTestimonial.title}</h3>
+            <h3 className="testimonial-title">{currentTestimonialFromWP.title}</h3>
             <p className="testimonial-text">
-              {currentTestimonial.text}
+              {currentTestimonialFromWP.text}
             </p>
             <div className="customer-info">
-              <p className="customer-name">{currentTestimonial.name}</p>
+              <p className="customer-name">{currentTestimonialFromWP.name}</p>
               <div className="stars">
-                {Array.from({ length: currentTestimonial.stars }).map((_, i) => (
+                {Array.from({ length: currentTestimonialFromWP.stars }).map((_, i) => (
                   <span key={i}>&#9733; </span>
                 ))}
               </div>
-              <p className="customer-role">{currentTestimonial.role}</p>
+              <p className="customer-role">{currentTestimonialFromWP.role}</p>
             </div>
           </div>
         </div>
